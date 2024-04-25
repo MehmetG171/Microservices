@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: db-deployment
+  labels:
+    app: todoapp
 spec:
   replicas: 1
   selector:
@@ -17,16 +19,15 @@ spec:
       - image: mongo:5.0
         name: mongo
         ports:
-        - name: mongo
-          containerPort: 27017
+        - containerPort: 27017
         volumeMounts:
           - name: mongo-storage
             mountPath: /data/db
       volumes:
         #- name: mongo-storage
         #  hostPath:
-        #    path: /data/db
+        #    path: /home/ubuntu/pv-data
         - name: mongo-storage
           persistentVolumeClaim:
             claimName: database-persistent-volume-claim
-                      
+            
