@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: web-deployment
+  labels:
+    app: todoapp
 spec:
   replicas: 1
   selector:
@@ -21,9 +23,12 @@ spec:
             - containerPort: 3000
           env:
             - name: "DBHOST"
-              value: "mongodb://db-service:27017"
+              value: db-service
           resources:
             limits:
+              memory: 500Mi
               cpu: 100m
             requests:
-              cpu: 80m
+              memory: 250Mi
+              cpu: 80m	
+              
